@@ -1,0 +1,34 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+*
+    line-height: normal
+
+*:focus
+    outline: none
+
+// scrollbar
+// firefox
+html, body
+    scrollbar-color: #343434 #0F0F0F
+    scrollbar-width: auto 
+    border-radius: .5rem
+
+// остальные браузеры
+/* полоса прокрутки (скроллбар) */
+body::-webkit-scrollbar
+    width: 1.2rem
+    height: 100%
+    background-color: #343434
+
+/* ползунок скроллбара */
+body::-webkit-scrollbar-thumb
+    background-color: #0F0F0F
+    border-radius: .5rem
+
+@layer components
+    .container_page
+        @apply phone-sm:px-[.4rem] verticalphone:px-[.8rem] horizontalphone:px-[1.6rem] tablet:px-[1.8rem] laptop:px-[2rem]
+    .input-search
+        @apply flex items-center border border-gray bg-white/0 rounded-[1rem] focus:outline-none placeholder:text-placeholder-grey bg-no-repeat bg-[length:2rem_2rem] bg-[center_right_2rem] bg-[url('/images/Search.svg')]
