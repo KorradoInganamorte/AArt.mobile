@@ -19,7 +19,7 @@ const CardScrollY = () => {
       ) : isSuccess ? (
         <div className="flex mb-[.4rem]">
           {animes?.data.map((anime, i) => (
-            <Link className="flex-shrink-0 mr-[.8rem] last:mr-0" href={`/about/${anime.id}`}><img key={i} className="w-[17.4rem] h-[23.6rem] rounded-[1rem]" src={`${PORT}${anime.attributes.image_webp.data.attributes.url}`} alt="card image" /></Link>
+            <Link key={i} className="flex-shrink-0 mr-[.8rem] last:mr-0" href={`/about/${anime.id}`}><img className="w-[17.4rem] h-[23.6rem] rounded-[1rem]" src={`${PORT}${anime.attributes.image_webp.data.attributes.url}`} alt="card image" /></Link>
           ))}
         </div>
         ) : (
