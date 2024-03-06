@@ -5,6 +5,7 @@ import { useState } from "react"
 
 import Card from "@/components/card/Card"
 
+const CardAnimeOfTheYear = dynamic(() => import("@/components/card/CardFilmOfTheYear"))
 const FilterBtn = dynamic(() => import("@/UI/button/FilterBtn"))
 const SearchFilmBar = dynamic(() => import("@/components/film/SearchFilmBar"))
 
@@ -19,13 +20,15 @@ const Page = () => {
   return (
     <div className="container_page">
 
-      <div className="absolute translate-x-[50%] translate-y-[-5.8rem] w-[60rem]">
+      {/* <div className="absolute translate-x-[50%] translate-y-[-5.8rem] w-[60rem]">
         <SearchFilmBar showDropdown={showDropdown} setShowDropdown={setShowDropdown} setSearchQuery={setSearchQuery} />
-      </div>
+      </div> */}
 
-      <div className="mb-[1rem] mt-[1.6rem]">
+      <div className="flex overflow-x-scroll mb-[1.2rem] mt-[1.2rem]">
         <FilterBtn lists={lists} isActive={isActive} setIsActive={setIsActive} />
       </div>
+
+      <CardAnimeOfTheYear />
 
       <Card showDropdown={showDropdown} active={active} searchQuery={searchQuery} />
       

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 
 import { robotoMedium } from "@/public/fonts"
 
@@ -16,7 +16,7 @@ const FilterBtn = ({ lists, isActive, setIsActive }: Props) => {
   return (
     <>
       {lists.map((list, i) => (
-        <div key={i} onClick={() => handleClick(i)} className={`inline-block ${isActive === i ? "bg-white text-black" : "bg-gray text-white hover:bg-gray-hover-filter_btn"} py-[.6rem] px-[1.6rem] mr-[1.6rem] last:mr-0 rounded-[.5rem] ${robotoMedium} text-lg cursor-pointer ease-in transition-colors`}>{list}</div>
+        <div key={i} onClick={() => handleClick(i)} className={`inline-block h-min ${isActive === i ? "bg-white text-black" : "bg-gray text-white"} py-[.6rem] px-[1.2rem] mr-[1rem] first:mb-[.4rem] last:mr-0 rounded-[.5rem] ${robotoMedium} text-base whitespace-nowrap`}>{list}</div>
       ))}
     </>
   )

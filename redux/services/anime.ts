@@ -14,7 +14,7 @@ export const animeApi = createApi({
       query: ({ id }) =>  `/api/animes/${id}?populate[rating]=*&populate[acters]=*&populate[category]=*&populate[image_webp][fields][0]=name&populate[image_webp][fields][1]=url&populate[image_webp3x][fields][0]=name&populate[image_webp3x][fields][1]=url`
     }),
     getAnimeOfTheYear: builder.query<AnimeOfTheYear, string>({
-      query: () =>  `/api/anime-of-the-year?fields[0]=title&fields[1]=description&fields[2]=url&populate[img][fields][0]=name&populate[img][fields][1]=url&populate[img_mobile][fields][0]=name&populate[img_mobile][fields][1]=url`
+      query: () =>  `/api/anime-of-the-year?fields[0]=title&fields[1]=description&fields[2]=url&populate[img][fields][0]=name&populate[img][fields][1]=url&populate[img_mobile][fields][0]=name&populate[img_mobile][fields][1]=url&populate[img_card][fields][0]=name&populate[img_card][fields][1]=url&populate[rating]=*`
     })
   }),
 })

@@ -1,3 +1,4 @@
+import { Ratings } from "./Information"
 import { Media } from "./Media"
 import { Data, Meta } from "./Meta"
 

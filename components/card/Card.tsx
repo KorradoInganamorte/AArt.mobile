@@ -32,11 +32,9 @@ const Card = ({ showDropdown, active, searchQuery }: Props) => {
         isSuccess ? (
           <>
             {animes.data.length > 0 ? animes?.data.filter(anime => anime.attributes.title.toLowerCase().includes(searchQuery.toLowerCase())).map((anime) => (
-              <Link href={`/about/${anime.id}`} key={anime.id} className={`w-max h-max px-[.8rem] py-[.6rem] pb-[1.8rem] rounded-[.8rem] hover:bg-black ${showDropdown ? "" : "hover:scale-[1.02]"} cursor-pointer ease-in-out transition-all`}>
-                <div className="w-max bg-[#2B2B2B] rounded-[.5rem]">
-                  <img className="w-[20.9rem] h-[28.4rem] p-[.4rem] mb-[.8rem] rounded-[.5rem]" src={`${PORT}${anime.attributes.image_webp.data.attributes.url}`} alt="card image" />
-                </div>
-                <h2 className={`max-w-[20.9rem] ${robotoMedium} text-3xl text-white`}>{anime.attributes.title}</h2>
+              <Link href={`/about/${anime.id}`} key={anime.id} className="h-max">
+                <img className="w-full h-[22.8rem] p-[.4rem] mb-[.8rem] rounded-[1rem]" src={`${PORT}${anime.attributes.image_webp.data.attributes.url}`} alt="card image" />
+                <h2 className={`${robotoMedium} text-xl text-white`}>{anime.attributes.title}</h2>
               </Link>
             )) : (
               <div className="absolute w-[96vw] h-[60vh] mx-auto flex items-center justify-center bg-dark-gray">
