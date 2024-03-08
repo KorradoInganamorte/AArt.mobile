@@ -3,7 +3,10 @@
 import Link from "next/link"
 
 import { useGetAllAnimeQuery } from "@/redux/services/anime"
+
 import { usePort } from "@/context/portContext"
+import { useDropdown } from "@/context/dropdownContext"
+import { useSearchQuery } from "@/context/queryContext"
 
 import Skeleton from "@/UI/skeleton/Skeleton"
 
@@ -11,17 +14,18 @@ import { robotoMedium } from "@/public/fonts"
 import "./card.sass"
 
 type Props = {
-  showDropdown: boolean
   active: string
-  searchQuery: string
 }
 
-const Card = ({ showDropdown, active, searchQuery }: Props) => {
+const Card = ({ active }: Props) => {
   const { PORT } = usePort()
   const { data: animes, isLoading, isSuccess } = useGetAllAnimeQuery({ sort: active })
 
+  const { showDropdown } = useDropdown()
+  const { searchQuery } = useSearchQuery()
+
   return (
-    <div className="film-layout">
+    <div className={`${showDropdown ? "hidden" : "film-layout"}`}>
       {isLoading ? (
       <>
         {Array.from({ length: 10 }).map((_, i) => (

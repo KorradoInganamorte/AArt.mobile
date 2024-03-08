@@ -16,6 +16,8 @@ import Footer from '@/components/Footer'
 import { ReduxProvider } from '@/redux/ReduxProvider'
 import { PortProvider } from '@/context/portContext'
 import { QualityProvider } from '@/context/qualityContext'
+import { DropdownProvider } from '@/context/dropdownContext'
+import { SearchQueryProvider } from '@/context/queryContext'
 
 export const metadata: Metadata = {
   title: 'Anime',
@@ -32,10 +34,14 @@ export default function RootLayout({
       <body className={`h-[100vh] ${robotoRegular} ${robotoGoogle.variable} bg-dark-gray`}>
         <ReduxProvider>
           <PortProvider>
-            <Header />
-              <QualityProvider>
-                {children}
-              </QualityProvider>
+            <DropdownProvider>
+              <SearchQueryProvider>
+                <Header />
+                  <QualityProvider>
+                    {children}
+                  </QualityProvider>
+                </SearchQueryProvider>
+            </DropdownProvider>
             <Footer />
           </PortProvider>
         </ReduxProvider>
