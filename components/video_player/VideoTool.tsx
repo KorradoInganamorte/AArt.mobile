@@ -408,10 +408,6 @@ const VideoTool = ({ className, series, anime, videoRef, containerRef }: Props) 
           <button onClick={handlePlayPause} className="flex items-center justify-center w-[3.2rem] h-[3.4rem]"><img className='w-[1.8rem] h-[1.8rem]' src={isPlayed ? "/images/Play.svg" : "/images/Pause.svg"} alt="play/pause button" /></button>
           <button onClick={nextSeriesHandleClick} className="flex items-center justify-center w-[3.2rem] h-[3.4rem] mr-[1rem]"><img className='w-[2.2rem] h-[2.2rem]' src="/images/NextSeriesIcon.svg" alt="next series button" /></button>
           
-          <div className='flex items-center ml-[1.6rem] mr-[2.4rem]'>
-            <img onClick={handleVolumeChange} className="w-[2.2rem] h-[2rem] mr-[1rem] cursor-pointer" src={currentVolumeDisabled ? "/images/VolumeDisabled.svg" : "/images/Volume.svg"} alt="volume change icon" />
-            <input ref={volumeRef} onChange={(e) => changeVolume(parseFloat(e.target.value))} className='w-[5.8rem] h-[.1rem] bg-white cursor-pointer' type="range" min={0} max={1} step={0.1}/>
-          </div>
 
           <p className={`${robotoMedium} text-lg text-white`}>{(duration !== "0:00" && currentTime && !Number.isNaN(duration) && !Number.isNaN(currentTime)) ? `${currentTime} / ${duration}` : `0:00 / 0:00`}</p>
         </div>

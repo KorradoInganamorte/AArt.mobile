@@ -37,7 +37,8 @@ export default {
       "gray-hover-card": "#2B2B2B",
       "gray-item-card": "#D7D7D7",
       red: "#FF3D00",
-      blue: "#4D9FFF"
+      blue: "#4D9FFF",
+      "light-blue": "#8EC2FF"
     },
     extend: {},
   },
