@@ -9,7 +9,6 @@ import SearchFilmBar from "@/components/film/SearchFilmBar"
 
 import { montserratSubrayada } from "@/public/fonts"
 
-
 const Header = () => {
   const pathname = usePathname()
   const { showDropdown, setShowDropdown } = useDropdown()

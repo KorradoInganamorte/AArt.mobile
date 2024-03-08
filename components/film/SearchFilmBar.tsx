@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import useDebounce from "@/lib/hooks/useDebounce";
 
@@ -13,7 +13,7 @@ const SearchFilmBar = () => {
     const { data: animes } = useGetAllAnimeQuery({ sort: "Все" })
 
     const { setShowDropdown } = useDropdown()
-    const { setSearchQuery } = useSearchQuery()
+    const { searchQuery, setSearchQuery } = useSearchQuery()
 
     const [search, setSearch] = useState<string>("")
     const value = useDebounce(search, 600)
@@ -23,36 +23,21 @@ const SearchFilmBar = () => {
     const dropdownListContainerRef = useRef<HTMLDivElement>(null)
 
     const keyDownEvent = (e: any) => {
-        switch (e.key) {
-          case "Enter":
-            setShowDropdown(false)
-            setSearchQuery(value)
-            inputRef.current?.blur()
-            break;
-          default:
-            break;
-        }
+      switch (e.key) {
+        case "Enter":
+          setShowDropdown(false)
+          setSearchQuery(value)
+          break;
+        default:
+          break;
+      }
     }
 
     const handleClickDropdownList = (anime: Data) => {
-        setSearchQuery(anime.attributes.title)
-        setSearch(anime.attributes.title)
-        setShowDropdown(false)
+      setSearchQuery(anime.attributes.title)
+      setSearch(anime.attributes.title)
+      setShowDropdown(false)
     }
-
-    const handleClickOutside = (e: any) => {
-        if (!dropdownRef.current?.contains(e.target)) {
-          setShowDropdown(false)
-        }
-    };
-    
-    useEffect(() => {
-        document.addEventListener("click", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, []);
 
   return (
     <div className="absolute top-0 left-0 z-3 w-[100%] min-h-screen bg-dark-gray px-[1.4rem]" ref={dropdownRef} onKeyDown={keyDownEvent}>

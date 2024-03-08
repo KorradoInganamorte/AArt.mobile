@@ -36,9 +36,9 @@ const Card = ({ active }: Props) => {
         isSuccess ? (
           <>
             {animes.data.length > 0 ? animes?.data.filter(anime => anime.attributes.title.toLowerCase().includes(searchQuery.toLowerCase())).map((anime) => (
-              <Link href={`/about/${anime.id}`} key={anime.id} className="h-max">
-                <img className="w-full h-[22.8rem] p-[.4rem] mb-[.8rem] rounded-[1rem]" src={`${PORT}${anime.attributes.image_webp.data.attributes.url}`} alt="card image" />
-                <h2 className={`${robotoMedium} text-xl text-white`}>{anime.attributes.title}</h2>
+              <Link href={`/about/${anime.id}`} key={anime.id} className="flex flex-col justify-center h-max">
+                <img className="w-full max-w-[19rem] h-[22.8rem] p-[.4rem] mb-[.8rem] mx-auto rounded-[1rem]" src={`${PORT}${anime.attributes.image_webp.data.attributes.url}`} alt="card image" />
+                <h2 className={`${robotoMedium} text-xl mx-auto text-white`}>{anime.attributes.title}</h2>
               </Link>
             )) : (
               <div className="w-[96vw] h-[40vh] mx-auto flex items-center justify-center bg-dark-gray">

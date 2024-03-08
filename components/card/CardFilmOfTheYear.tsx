@@ -19,7 +19,7 @@ const CardAnimeOfTheYear = () => {
           <SkeletonCardFilmOfTheYear />
         ) : isSuccess ? (
           <div className="flex flex-col bg-[#1E1E1E] p-[.4rem] mb-[2rem] rounded-[.5rem] text-white">
-            <img rel="preload" className="w-[37.4rem] h-[18.3rem] rounded-[.5rem] mb-[.6rem]" src={`${PORT}${anime?.data.attributes.img.data.attributes.url}`} alt="anime of the year image card" />
+            <img className="w-full h-[18.3rem] rounded-[.5rem] mb-[.6rem]" src={`${PORT}${anime?.data.attributes.img.data.attributes.url}`} alt="anime of the year image card" />
             <div className="px-[.6rem] mb-[1rem]">
               <h1 className={`${robotoMedium} text-xl mb-[.6rem]`}>{anime?.data.attributes.title}</h1>
               <p className="text-base line-clamp-[3]">{anime?.data.attributes.description}</p>
