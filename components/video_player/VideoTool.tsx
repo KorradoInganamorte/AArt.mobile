@@ -83,14 +83,34 @@ const VideoTool = ({ className, series, anime, videoRef, containerRef }: Props) 
     setIsHiddenInterface(false)
     if (videoRef.current) {
       if (videoRef.current.paused) {
-        setIsPlayed(false)
+        setIsPlayed(true)
+        setIsHiddenInterface(true)
         videoRef.current.play();
       } else {
-        setIsPlayed(true)
+        setIsPlayed(false)
+        setIsHiddenInterface(false)
         videoRef.current.pause();
       }
     }
   };
+
+  const handleVideoClick = () => {
+    if (videoRef.current && videoToolRef.current) {
+      checkIsHiddenInterface()
+    }
+  }
+
+  const checkIsHiddenInterface = () => {
+    if (videoToolRef.current?.classList.contains("opacity-0")) {
+      videoToolRef.current?.classList.remove("opacity-0")
+      videoToolRef.current?.classList.add("opacity-100")
+      videoRef.current?.classList.add("brightness-50")
+    } else {
+      videoToolRef.current?.classList.add("opacity-0")
+      videoToolRef.current?.classList.remove("opacity-100")
+      videoRef.current?.classList.remove("brightness-50")
+    }
+  }
 
   // Переключение на предыдущую/следующую серию
   const nextSeriesHandleClick = () => {
@@ -103,27 +123,27 @@ const VideoTool = ({ className, series, anime, videoRef, containerRef }: Props) 
 
 // Показ/Скрытие VideoTool
   // MouseLeave
-  const checkIsHiddenInterface = () => {
-    if(videoRef.current && videoRef.current.paused) {
-      setIsHiddenInterface(false)
-    } else {
-      setIsHiddenInterface(true)
-    }
-  }
+  // const checkIsHiddenInterface = () => {
+  //   if(videoRef.current && videoRef.current.paused) {
+  //     setIsHiddenInterface(false)
+  //   } else {
+  //     setIsHiddenInterface(true)
+  //   }
+  // }
 
-  // MouseOver
-  const showInterface = () => {
-    setIsHiddenInterface(false)
+  // // MouseOver
+  // const showInterface = () => {
+  //   setIsHiddenInterface(false)
 
-    if(document.fullscreenElement && !videoRef.current?.paused) {
-      const id = setTimeout(() => {
-        setIsHiddenInterface(true)
-        clearTimeout(id)
-      }, 2400)
-    }
-  }
+  //   if(document.fullscreenElement && !videoRef.current?.paused) {
+  //     const id = setTimeout(() => {
+  //       setIsHiddenInterface(true)
+  //       clearTimeout(id)
+  //     }, 2400)
+  //   }
+  // }
 
-  const throttleShowInterface = throttle(showInterface, 500)
+  // const throttleShowInterface = throttle(showInterface, 500)
 
 // Логика showTimeRef (всплывашка при перемотке видео, которая показывает время, на которое пользователь хочет перемотать)
   // Типизировать нормально event
@@ -317,31 +337,31 @@ const VideoTool = ({ className, series, anime, videoRef, containerRef }: Props) 
     })
 
     if (videoRef.current) {
-      videoRef.current.addEventListener("click", handlePlayPause)
+      videoRef.current.addEventListener("click", handleVideoClick)
       videoRef.current.addEventListener('timeupdate', throttledUpdateCurrentParams);
       videoRef.current.addEventListener("waiting", videoIsWaiting)
       videoRef.current.addEventListener("canplay", videoIsCanPlay)
     }
 
     // Установка фокуса на containerRef при загрузки страницы и лобавление слушителя событие на нажатие клавиш
-    if (containerRef.current) {
-      containerRef.current.focus({preventScroll: true})
-      containerRef.current.addEventListener("mousemove", throttleShowInterface)
-      containerRef.current.addEventListener("mouseleave", checkIsHiddenInterface)
-      containerRef.current.addEventListener("keydown", keyDownEvent)
-    }
+    // if (containerRef.current) {
+    //   containerRef.current.focus({preventScroll: true})
+    //   containerRef.current.addEventListener("mousemove", throttleShowInterface)
+    //   containerRef.current.addEventListener("mouseleave", checkIsHiddenInterface)
+    //   containerRef.current.addEventListener("keydown", keyDownEvent)
+    // }
 
     document.addEventListener("click", handleSettingsClickOutside);
 
     return () => {
       if (videoRef.current && containerRef.current && videoToolRef.current) {
-        videoRef.current.removeEventListener('click', handlePlayPause);
+        videoRef.current.removeEventListener('click', handleVideoClick);
         videoRef.current.removeEventListener('timeupdate', throttledUpdateCurrentParams);
         videoRef.current.removeEventListener("waiting", videoIsWaiting)
         videoRef.current.removeEventListener("canplay", videoIsCanPlay)
-        containerRef.current.removeEventListener("mousemove", throttleShowInterface)
-        containerRef.current.removeEventListener("mouseleave", checkIsHiddenInterface)
-        containerRef.current.removeEventListener("keydown", keyDownEvent)
+        // containerRef.current.removeEventListener("mousemove", throttleShowInterface)
+        // containerRef.current.removeEventListener("mouseleave", checkIsHiddenInterface)
+        // containerRef.current.removeEventListener("keydown", keyDownEvent)
         document.removeEventListener("click", handleSettingsClickOutside);
       }
     };
@@ -371,7 +391,8 @@ const VideoTool = ({ className, series, anime, videoRef, containerRef }: Props) 
   }, [currentQuality])
 
   return (
-    <div ref={videoToolRef} className={`${className} translate-y-[-5.2rem] ${isHiddenInterface ? "opacity-0" : "opacity-100"} ease-in transition-opacity`}>
+    <>
+    <div ref={videoToolRef} className={`${className} translate-y-[-3.8rem] opacity-100 ease-in-out transition-opacity`}>
       
       <div ref={loaderRef} className="absolute top-[-41vh] left-[46vw] hidden items-center justify-center w-[8.4rem] h-[8.4rem]"><Loader /></div>
       
@@ -392,33 +413,34 @@ const VideoTool = ({ className, series, anime, videoRef, containerRef }: Props) 
         backToSettingsInterface={backToSettingsInterface} 
       />
       
-      <button onClick={handlePlayPause} ref={iconMessagePlayPause} className={`${isPlayed ? "flex" : "hidden"} absolute top-[-41vh] left-[46vw] items-center justify-center w-[8.4rem] h-[8.4rem] bg-gray/60 rounded-[50%]`}><img className={"w-[3.2rem] h-[3.2rem] translate-x-[.4rem]"} src={"/images/Play.svg"} alt="play/pause message icon" /></button>
-      
-      <div ref={showTimeRef} className={`showTime hidden absolute bg-gray/80 py-[.4rem] px-[1rem] mr-[5rem] rounded-[.5rem] ${robotoMedium} text-lg text-white translate-y-[-2.5rem]`}>0:00</div>
-      
-      <div onMouseLeave={hideTimeMouseMove} onMouseMove={showTimeMouseMoveThrottle} onClick={changeCurrentTimeRewind} ref={timeLineRef} className='relative z-[2] flex flex-wrap items-end w-[100%] h-[2rem] cursor-pointer' >
-        <div ref={currentTimeLineRef} className="w-[0%] h-[.3rem] bg-red z-[2] pointer-events-none"></div>
-        <div className="w-[100%] h-[.3rem] bg-gray translate-y-[-1rem] pointer-events-none"></div>
+      <div className={` absolute top-[-14vh] left-[20vw] flex items-center justify-between w-[60%]`}>
+        <button onClick={previousSeriesHandleClick} ref={iconMessagePlayPause} className={`flex items-center justify-center w-[4rem] h-[4rem] bg-gray/60 rounded-[50%]`}><img className='w-[2rem] h-[2rem] translate-x-[.2rem]' src="/images/PreviousSeriesIcon.svg" alt="previous series button" /></button>
+        <button onClick={handlePlayPause} ref={iconMessagePlayPause} className={`flex items-center justify-center w-[4.8rem] h-[4.8rem] bg-gray/60 rounded-[50%]`}><img className={"w-[2.2rem] h-[2.2rem] translate-x-[.1rem]"} src={isPlayed ? "/images/Pause.svg" : "/images/Play.svg"} alt="play/pause message icon" /></button>
+        <button onClick={nextSeriesHandleClick} ref={iconMessagePlayPause} className={`flex items-center justify-center w-[4rem] h-[4rem] bg-gray/60 rounded-[50%]`}><img className='w-[2rem] h-[2rem] translate-x-[-.2rem]' src="/images/NextSeriesIcon.svg" alt="next series button" /></button>
       </div>
 
-      <div className='flex items-center justify-between w-[100%] py-[.4rem] px-[2rem] bg-black/30 translate-y-[-1rem]'>
+      <div ref={showTimeRef} className={`showTime hidden absolute bg-gray/80 py-[.4rem] px-[1rem] mr-[5rem] rounded-[.5rem] ${robotoMedium} text-lg text-white translate-y-[-2.5rem]`}>0:00</div>
+
+      <div className='flex items-center justify-between w-[100%] py-[.4rem] px-[2rem]'>
         
         <div className='flex items-center'>
-          <button onClick={previousSeriesHandleClick} className="flex items-center justify-center w-[3.2rem] h-[3.4rem] mr-[.4rem]"><img className='w-[2.2rem] h-[2.2rem]' src="/images/PreviousSeriesIcon.svg" alt="previous series button" /></button>
-          <button onClick={handlePlayPause} className="flex items-center justify-center w-[3.2rem] h-[3.4rem]"><img className='w-[1.8rem] h-[1.8rem]' src={isPlayed ? "/images/Play.svg" : "/images/Pause.svg"} alt="play/pause button" /></button>
-          <button onClick={nextSeriesHandleClick} className="flex items-center justify-center w-[3.2rem] h-[3.4rem] mr-[1rem]"><img className='w-[2.2rem] h-[2.2rem]' src="/images/NextSeriesIcon.svg" alt="next series button" /></button>
-          
-
-          <p className={`${robotoMedium} text-lg text-white`}>{(duration !== "0:00" && currentTime && !Number.isNaN(duration) && !Number.isNaN(currentTime)) ? `${currentTime} / ${duration}` : `0:00 / 0:00`}</p>
+          <p className={`${robotoMedium} text-base text-white`}>{(duration !== "0:00" && currentTime && !Number.isNaN(duration) && !Number.isNaN(currentTime)) ? `${currentTime} / ${duration}` : `0:00 / 0:00`}</p>
         </div>
 
         <div className="flex">
-          <button ref={settingsButtonRef} onClick={handleVisibleSettingInterface} className="flex items-center justify-center w-[3.6rem] h-[2.4rem] mr-[1.1rem] cursor-pointer"><img className="w-[2.4rem] h-[2.4rem]" src="/images/VideoSettings.svg" alt="video settings" /></button>
-          <button onClick={handleFullScreenChange} className='flex items-center justify-center w-[3.6rem] h-[2.4rem]'><img className="w-[2.2rem] h-[2.2rem]" src="/images/FullScreen.svg" alt="full screen button" /></button>
+          {/* <button ref={settingsButtonRef} onClick={handleVisibleSettingInterface} className="flex items-center justify-center w-[3.6rem] h-[2.4rem] mr-[1.1rem] cursor-pointer"><img className="w-[2.4rem] h-[2.4rem]" src="/images/VideoSettings.svg" alt="video settings" /></button> */}
+          <button onClick={handleFullScreenChange} className='flex items-center justify-center w-[3rem] h-[2rem]'><img className="w-[1.8rem] h-[1.8rem]" src="/images/FullScreen.svg" alt="full screen button" /></button>
         </div>
       
       </div>
+
+      
     </div>
+    <div onMouseLeave={hideTimeMouseMove} onMouseMove={showTimeMouseMoveThrottle} onClick={changeCurrentTimeRewind} ref={timeLineRef} className='relative z-[2] flex flex-wrap items-end w-[100%] h-[2rem] translate-y-[-3.7rem]' >
+      <div ref={currentTimeLineRef} className="w-[0%] h-[.3rem] bg-red z-[2] pointer-events-none"></div>
+      <div className="w-[100%] h-[.3rem] bg-gray translate-y-[-1rem] pointer-events-none"></div>
+    </div>
+    </>
   )
 }
 

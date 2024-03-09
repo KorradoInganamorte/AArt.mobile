@@ -30,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" className='phone-sm:text-[62.5%] verticalphone:text-[47%] horizontalphone:text-[48.5%] tablet:text-[50%] laptop-sm:text-[56.25%] laptop:text-[62.5%] monitor:text-[70.5%] screen:text-[87.5%] leading-normal'>
-      <body className={`h-[100vh] ${robotoRegular} ${robotoGoogle.variable} bg-dark-gray`}>
+    <html lang="ru" className='phone-sm:text-[62.5%] verticalphone:text-[69%] horizontalphone:text-[75.5%] tablet:text-[50%] laptop-sm:text-[56.25%] laptop:text-[62.5%] monitor:text-[70.5%] screen:text-[87.5%] leading-normal'>
+      <body className={`${robotoRegular} ${robotoGoogle.variable} bg-dark-gray`}>
         <ReduxProvider>
           <PortProvider>
             <DropdownProvider>

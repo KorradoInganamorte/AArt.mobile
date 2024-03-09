@@ -17,19 +17,18 @@ type Props = {
 const VideoPlayer = ({ id, series }: Props) => {
   const { data: anime } = useGetOnesAnimeQuery({ id: id })
 
-  // const [currentQuality, setCurrentQuality] = useState<string>("720")
   const { currentQuality, setCurrentQuality } = useQuality()
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className='w-[100%] h-[82vh] mb-[2rem]' tabIndex={0} ref={containerRef}>
+    <div className='w-full h-full mb-[2rem]' tabIndex={0} ref={containerRef}>
       <Head>
         <link rel="preload" as="image" href="/images/Pause.svg"/>
         <link rel="preload" as="image" href="/images/VolumeDisabled.svg"/>
       </Head>
-      <video className='relative w-[100%] h-[82vh] bg-black' ref={videoRef} src={`https://storage.yandexcloud.net/aart/${anime ? anime?.data.attributes.url_yandex_object : "evangelion"}/ep${series}.${currentQuality}.mp4`} />
+      <video className='relative w-full h-full bg-black' ref={videoRef} src={`https://storage.yandexcloud.net/aart/${anime ? anime?.data.attributes.url_yandex_object : "evangelion"}/ep${series}.${currentQuality}.mp4`} />
       {videoRef.current && containerRef.current ? (
         <VideoTool series={series} anime={anime} videoRef={videoRef} containerRef={containerRef}></VideoTool>
       ) : (
